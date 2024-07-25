@@ -4,9 +4,7 @@ on:
   pull_request:
     types:
       - opened
-  pull_request_review:
-    types:
-      - submitted
+      - edited
 
 permissions:
   contents: read # for actions/checkout to fetch code
@@ -17,7 +15,7 @@ env:
 
 jobs:
   tag-release:
-    if: github.event.review.state == 'approved' && startsWith(github.event.pull_request.head.ref, 'releases/')
+    if: startsWith(github.event.pull_request.head.ref, 'releases/')
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.release-version.outputs.version }}
